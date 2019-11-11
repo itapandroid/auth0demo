@@ -6,5 +6,7 @@
 	<string>revelup-dev.auth0.com</string>
 	<key>ClientId</key>
 	<string>77mylvhb9ZAo26hdVN4giej26bZCwSPz</string>
+	<key>ResponseType</key>
+	<string>code</string>
 </dict>
 </plist>

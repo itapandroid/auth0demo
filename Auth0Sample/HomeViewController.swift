@@ -29,22 +29,22 @@ class HomeViewController: UIViewController {
 
     // MARK: - IBAction
     @IBAction func showLoginController(_ sender: UIButton) {
-        guard let clientInfo = plistValues(bundle: Bundle.main) else { return }
-        
         if(!isAuthenticated){
             Auth0
                 .webAuth()
-                .scope("openid profile")
-                .audience("https://" + clientInfo.domain + "/userinfo")
+                .scope("openid offline_access")
+                .parameters(["revel_url" : "beecottons-auth"])
                 .start {
                     switch $0 {
                         case .failure(let error):
                             print("Error: \(error)")
                         case .success(let credentials):
                             guard let accessToken = credentials.accessToken else { return }
-                            self.showSuccessAlert("accessToken: \(accessToken)")
                             self.isAuthenticated = true
-                            sender.setTitle("Log out", for: .normal)
+                            DispatchQueue.main.async {
+                                self.showSuccessAlert("accessToken: \(accessToken)")
+                                sender.setTitle("Log out", for: .normal)
+                            }
                     }
                 }
         }
